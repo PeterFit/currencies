@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Курс валюты</title>
+    <!-- Подключаем библиотеку chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<h1>Курс валюты</h1>
+<canvas id="chart"></canvas>
+<script>
+    // Получаем параметры из URL
+    const params = new URLSearchParams(window.location.search);
+
+    // Извлекаем данные о курсе валюты из параметров
+    const values = params.getAll('value');
+
+    // Создаем массив для меток оси X
+    const labels = Array.from({length: values.length}, (v, i) => `День ${i+1}`);
+
+    // Создаем элемент canvas, на котором будет отображаться график
+    const ctx = document.getElementById('chart').getContext('2d');
+
+    // Создаем экземпляр класса Chart для отрисовки графика
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Курс валюты',
+                data: values,
+                borderColor: 'rgb(255, 99, 132)',
+                borderWidth: 2,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+</body>
+</html>
