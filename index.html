@@ -5,6 +5,7 @@
     <title>Курс валюты</title>
     <!-- Подключаем библиотеку chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/1.1.1/chartjs-plugin-zoom.min.js"></script>
 </head>
 <body>
 <h1>Курс валюты</h1>
@@ -14,10 +15,11 @@
     const params = new URLSearchParams(window.location.search);
 
     // Извлекаем данные о курсе валюты из параметров
-    const values = params.getAll('value');
+    //const values = params.getAll('value');
+    const values = [78.9, 78.3, 78.8, 78.7, 78.3, 78.8, 78.9, 78.9, 78.4, 78.2, 78.1, 78.8, 78.6, 78.9, 78.8, 78.7, 78.6, 78.3, 78.3, 78.9];
 
     // Создаем массив для меток оси X
-    const labels = Array.from({length: values.length}, (v, i) => `День ${i+1}`);
+    const labels = Array.from({length: values.length}, (v, i) => `День ${i + 1}`);
 
     // Создаем элемент canvas, на котором будет отображаться график
     const ctx = document.getElementById('chart').getContext('2d');
@@ -27,13 +29,29 @@
         type: 'line',
         data: {
             labels: labels,
-            datasets: [{
-                label: 'Курс валюты',
-                data: values,
-                borderColor: 'rgb(255, 99, 132)',
-                borderWidth: 2,
-                fill: false
-            }]
+            datasets: [
+                {
+                    label: 'Золотая корона',
+                    data: [76.4479, 76.4195, 76.3072, 76.6808, 76.9561, 76.8467, 76.8373, 77.1348, 77.2422, 76.7571, 76.6044, 76.5129, 76.4095, 76.7838, 76.6764],
+                    borderColor: 'rgb(29,70,234)',
+                    borderWidth: 2,
+                    fill: false
+                },
+                {
+                    label: 'Unistream',
+                    data: [76.5479, 76.4195, 76.3072, 76.6808, 76.8561, 76.7467, 76.8373, 77.0348, 77.2422, 76.7671, 76.6044, 76.5129, 76.4095, 76.7838, 76.6264],
+                    borderColor: 'rgb(255, 99, 132)',
+                    borderWidth: 2,
+                    fill: false
+                },
+                {
+                    label: 'Contact',
+                    data: [76.4279, 76.3695, 76.3072, 76.6108, 76.9561, 76.7467, 76.8373, 77.0348, 77.1422, 76.7671, 76.6044, 76.5129, 76.5095, 76.7838, 76.6764],
+                    borderColor: 'rgb(45,105,0)',
+                    borderWidth: 2,
+                    fill: false
+                },
+            ]
         },
         options: {
             responsive: true,
@@ -43,6 +61,19 @@
                         beginAtZero: true
                     }
                 }]
+            },
+            plugins: {
+                zoom: {
+                    zoom: {
+                        wheel: {
+                            enabled: true,
+                        },
+                        pinch: {
+                            enabled: true
+                        },
+                        mode: 'xy',
+                    }
+                }
             }
         }
     });
